@@ -34,3 +34,12 @@ Protože chci co nejjednodušší aplikaci bez nutnosti nastavovat [virtuální 
 Dále si sepíši požadavky na naší aplikaci a dáme rovnou také do repozitáře, viz commit 'Aplication requirements'.
 
 Z požadavků si sestavím případy užití, abych věděl jakou funkcionalitu musím pokrýt a jaké objekty (článek, uživatel, tag) musím vytvořit, viz commit 'Aplication use-cases'.
+
+## Návrh aplikace
+
+Vytvoříme si databázi s názvem simpleblog a nastavíme jí do projektu pomocí souboru /app/config.neon.
+
+Z požadavků a případů užití si vypíši základní entity které chci spravovat (článek, uživatel, tag) a vytvořím databázové tabulky s příslušnýmy atributy.
+Vzhledem k tomu, že článek může mít více tagů a jeden tag může odkazovat na více článků, vytvořím také relační tabulku pro vazbu mezi články a tagy. Protože používám InnoDB nastavím také relace mezi klíči a všechny parametry nastavím na CASCADE, protože když se smaže tag, nebo článek, musí se odstranit i příslušná vazba.
+Viz soubor _analyse/02_app_draft.md.
+Databázovou tabulku uložím do složky 'sql' jako skript 'simpleblog.sql'. Viz commit 'Entities and database'.
