@@ -23,3 +23,15 @@ Tag (tags)
 Tag-článek (articles_tags)
 - id_článku, id_tagu
 - relační tabulka pro navázání tagu na článek
+
+### 2.2 Model aplikace
+
+Základní třídy pro operaci s databází:
+- Simple\Repository\Repository
+- Simple\Repository\BaseRepository
+- Simple\Repository\BaseBindingRepository
+
+Repozitáře:
+- ArticlesRepository
+- TagsRepository
+- UsersRepository

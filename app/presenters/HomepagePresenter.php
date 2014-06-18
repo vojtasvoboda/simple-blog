@@ -3,8 +3,7 @@
 namespace App\Presenters;
 
 use Nette,
-	App\Model;
-
+    App\Model;
 
 /**
  * Homepage presenter.
@@ -12,9 +11,16 @@ use Nette,
 class HomepagePresenter extends BasePresenter
 {
 
-	public function renderDefault()
-	{
-		$this->template->anyVariable = 'any value';
-	}
+    private $articlesRepository;
+
+    public function __construct(\App\Model\ArticlesRepository $articlesRepository)
+    {
+        $this->articlesRepository = $articlesRepository;
+    }
+
+    public function renderDefault()
+    {
+        $this->template->articles = $this->articlesRepository->findAll();
+    }
 
 }
