@@ -25,3 +25,6 @@ services:
 	- App\Model\UserManager
 	- App\RouterFactory
 	router: @App\RouterFactory::createRouter
+	articles: App\Model\ArticlesRepository
+	tags: App\Model\TagsRepository
+	users: App\Model\UsersRepository

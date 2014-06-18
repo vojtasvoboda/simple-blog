@@ -92,6 +92,13 @@ ALTER TABLE `articles_tags`
   ADD CONSTRAINT `articles_tags_ibfk_2` FOREIGN KEY (`tags_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `articles_tags_ibfk_1` FOREIGN KEY (`articles_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Data pro tabulku articles
+--
+INSERT INTO `articles` (`id`, `name`, `text`, `date`, `url`, `published`, `published_date`, `master`, `created`, `modified`) VALUES
+(1, 'První článek', '<p>První testovací článek</p>', '2014-06-18 00:00:00', 'prvni-clanek', 1, '2014-06-18 00:00:00', 1, '2014-06-18 00:00:00', '2014-06-18 00:00:00'),
+(2, 'Druhý článek', '<p>Druhý testovací článek</p>', '2014-06-18 00:00:00', 'druhy-clanek', 1, '2014-06-18 00:00:00', 1, '2014-06-18 00:00:00', '2014-06-18 00:00:00');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
