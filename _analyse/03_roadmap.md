@@ -4,7 +4,6 @@ Vypíšeme si seznam rozšíření dle priorit. Seznam budu průběžně měnit.
 
 ### Seznam doplňkových požadavků
 
-- ve výpisu všech článku vypsat pouze perex
 - implementace tagů
 - vytvoření vzhledu frontendu
 - open-graph meta tagy
@@ -19,3 +18,4 @@ Vypíšeme si seznam rozšíření dle priorit. Seznam budu průběžně měnit.
 
 - ✓ základní aplikace
 - ✓ výpis všech článků a detail článku
+- ✓ ve výpisu všech článku vypsat pouze perex

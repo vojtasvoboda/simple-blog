@@ -13,14 +13,19 @@ class HomepagePresenter extends BasePresenter
 
     private $articlesRepository;
 
-    public function __construct(\App\Model\ArticlesRepository $articlesRepository)
+    private $tagsRepository;
+
+    public function __construct(\App\Model\ArticlesRepository $articlesRepository,
+                                \App\Model\TagsRepository $tagsRepository)
     {
         $this->articlesRepository = $articlesRepository;
+        $this->tagsRepository = $tagsRepository;
     }
 
     public function renderDefault()
     {
         $this->template->articles = $this->articlesRepository->findAllPublished();
+        $this->template->tags = $this->tagsRepository->findAll();
     }
 
     public function renderDetail($slug)

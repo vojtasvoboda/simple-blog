@@ -1,13 +1,28 @@
 {block content}
 
-<h1>Vojta Svoboda Blog</h1>
+<section id="section">
 
-{foreach $articles as $article}
+    <h1>Vojta Svoboda Blog</h1>
 
-<div class="article">
-    <h2><a href="{link Homepage:detail $article->url}">{$article->name}</a></h2>
-    <p class="date"><span class="label">Datum: </span><span class="value">{$article->date|date:'d.m.Y'}</span></p>
-    <p>{!$article->text|perex}</p>
-</div>
+    {foreach $articles as $article}
 
-{/foreach}
+    <div class="article">
+        <h2><a href="{link Homepage:detail $article->url}">{$article->name}</a></h2>
+        <p class="date"><span class="label">Datum: </span><span class="value">{$article->date|date:'d.m.Y'}</span></p>
+        <p>{!$article->text|perex}</p>
+    </div>
+
+    {/foreach}
+
+</section>
+
+<aside id="aside">
+    {if $tags}
+    <h3>Tagy</h3>
+    <p class="tags">
+        {foreach $tags as $tag}
+        <span class="tag">{$tag->name}</span><span class="separator">{if !$iterator->last}, {/if}</span>
+        {/foreach}
+    </p>
+    {/if}
+</aside>

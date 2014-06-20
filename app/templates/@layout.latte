@@ -17,7 +17,11 @@
 
 	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
-	{include content}
+    <div id="content"{ifset #contentclass} class="{include contentclass}"{/ifset}>
+
+        {include content}
+
+	</div>
 
 	{block scripts}
 	<script src="{$basePath}/assets/js/jquery.js"></script>

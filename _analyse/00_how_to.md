@@ -163,7 +163,22 @@ V šabloně pro výpis všech článků už jenom aplikujeme vytvořený helper:
 Také jsem provedl pár dalších drobností: vypsání meta tagu description v detailu článku, dle názvu článku; vypsání pouze publikovaných článků atd.
 Viz commit ['Article perexes']()
 
-### Implementace tagů
+### Výpis tagů v detailu článku
+
+Do databáze si vložíme nějaké tagy a vypíšeme je v detailu článku:
+
+<p class="tags">
+    <span class="label">Tagy: </span>
+    {foreach $article->related(articles_tags) as $tag}
+    <span class="tag">{$tag->tags->name}</span><span class="separator">{if !$iterator->last}, {/if}</span>
+    {/foreach}
+</p>
+
+Za posledním tagem čárku již nevypisujeme. Není třeba nijak modifikovat model, ani presenter článků.
+
+To samé si uděláme u výpisu všech článků, ale zde vypíšeme úplně všechny tagy uložené v systému. Abychom to měli zobrazeno v levém sloupci vedle článků,
+trošku upravíme layout celého webu a přidáme levý sloupec. Dále je potřeba získat všechny tagy v systému a to provedeme v HomepagePresenteru v akci renderDefault().
+Model není potřeba upravit, protože voláme obecnou metodu findAll(). Viz commit ['Articles tags']()
 
 TODO:
 - projít jak se zavádějí služby/factories do konfigu
