@@ -18,6 +18,7 @@ Chci se tak vyvarovat použití VirtualHosts, Nette modulů, migrací, entit, at
 - komentáře pod článkem
 - verzování článků
 - vzhledově přibližně jako blog http://matschaffer.com/ nebo dle základního vzhledu Postheaven (http://blog.posthaven.com/)
+- font viz Clearly doplněk do Chrome (font-family: chaparral-pro, serif;)
 - blog bude mít levý sloupec, kde bude vyhledávání, tagy a popis autora - posune to čtený text doprostřed monitoru
 
 ### 1.1. Technické požadavky

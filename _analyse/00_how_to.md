@@ -134,7 +134,7 @@ která by nebyla kompatibilní, mohla by se nám aplikace rozbít.
 Protože naše aplikace umí vypsat všechny články a zobrazit jeho detail, označíme si aplikaci jako verzi 0.1 a přidáme do gitu příslušný tag.
 Sice nevypadá pěkně a skoro nic neumí, svůj účel ale již splňuje.
 
-Aktuální stav aplikace viz commit ['Article detail'](https://github.com/vojtasvoboda/SimpleBlog/commit/4a5ab9ed33178daff61b42dd7d5ae66ac72cfb82).
+Aktuální stav aplikace viz commit ['Article detail'](https://github.com/vojtasvoboda/SimpleBlog/commit/de86074625bf0d59a113c937aef1f457938de246).
 
 TODO:
 - projít jak se zavádějí služby/factories do konfigu
