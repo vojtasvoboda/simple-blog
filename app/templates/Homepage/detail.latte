@@ -1,9 +1,11 @@
+{block title}{$article->name|truncate:50}{/block}
+{block description}{$article->name}{/block}
 {block content}
 
 <h1>{$article->name}</h1>
 
 <p><a href="{link Homepage:}">&lt; zpět na všechny články</a></p>
 
-Datum: {$article->date|date:'d.m.Y'}
+<p class="date"><span class="label">Datum: </span><span class="value">{$article->date|date:'d.m.Y'}</span></p>
 
 {!$article->text}

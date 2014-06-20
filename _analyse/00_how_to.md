@@ -131,10 +131,39 @@ která by nebyla kompatibilní, mohla by se nám aplikace rozbít.
 
 ### Otagování verze
 
-Protože naše aplikace umí vypsat všechny články a zobrazit jeho detail, označíme si aplikaci jako verzi 0.1 a přidáme do gitu příslušný tag.
+Protože naše aplikace umí vypsat všechny články a zobrazit jeho detail, označíme si aplikaci jako verzi 0.1 a přidáme do gitu ['příslušný tag'](https://github.com/vojtasvoboda/SimpleBlog/tree/v0.1).
 Sice nevypadá pěkně a skoro nic neumí, svůj účel ale již splňuje.
 
 Aktuální stav aplikace viz commit ['Article detail'](https://github.com/vojtasvoboda/SimpleBlog/commit/de86074625bf0d59a113c937aef1f457938de246).
+
+## Rozšiřování blogu o další funkce
+
+Základ blogu máme vytvořený, ale umí prakticky pouze zobrazit všechny články a konkrétní detail článku.
+Funkcí které je potřeba doplnit a implementovat je hodně, ale já chci blog spustit co nejdříve a proto je potřeba přidělit úkolům priority.
+
+### Výpis pouze úryvku článku ve výpisu všech článků
+
+Pro zkrácení textu ve výpisu všech článků vytvoříme helper, který pak zavoláme v šabloně. Helper implementujeme jako anonymní funkci a zaregistrujeme v presenteru do Latte:
+
+protected function createTemplate($class = NULL)
+{
+    $template = parent::createTemplate($class);
+    // perex helper
+    $template->getLatte()->addFilter('perex', function($s, $class = 'posthaven-more') {
+        $startBreakpoint = strpos($s, '<hr class="' . $class);
+        return mb_substr($s, 0, $startBreakpoint);
+    });
+    return $template;
+}
+
+V šabloně pro výpis všech článků už jenom aplikujeme vytvořený helper:
+
+<p>{!$article->text|perex}</p>
+
+Také jsem provedl pár dalších drobností: vypsání meta tagu description v detailu článku, dle názvu článku; vypsání pouze publikovaných článků atd.
+Viz commit ['Article perexes']()
+
+### Implementace tagů
 
 TODO:
 - projít jak se zavádějí služby/factories do konfigu

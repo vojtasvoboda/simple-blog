@@ -20,16 +20,27 @@ class HomepagePresenter extends BasePresenter
 
     public function renderDefault()
     {
-        $this->template->articles = $this->articlesRepository->findAll();
+        $this->template->articles = $this->articlesRepository->findAllPublished();
     }
 
     public function renderDetail($slug)
     {
-        $article = $this->articlesRepository->findOne($slug);
+        $article = $this->articlesRepository->findOnePublished($slug);
         if (!$article) {
             $this->setView('notfound');
         }
         $this->template->article = $article;
+    }
+
+    protected function createTemplate($class = NULL)
+    {
+        $template = parent::createTemplate($class);
+        // perex helper
+        $template->getLatte()->addFilter('perex', function($s, $class = 'posthaven-more') {
+            $startBreakpoint = strpos($s, '<hr class="' . $class);
+            return mb_substr($s, 0, $startBreakpoint);
+        });
+        return $template;
     }
 
 }

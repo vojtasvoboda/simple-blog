@@ -23,7 +23,7 @@ class RouterFactory
             $router = new RouteList();
             $router[] = new Route('index.php', 'Front:Pages:default', Route::ONE_WAY);
             $router[] = new Route('', 'Homepage:default');
-            $router[] = new Route('<slug>/', 'Homepage:detail');
+            $router[] = new Route('<slug>', 'Homepage:detail');
             $router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 
         } else {

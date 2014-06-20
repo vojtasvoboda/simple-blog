@@ -31,6 +31,7 @@ Chci se tak vyvarovat použití VirtualHosts, Nette modulů, migrací, entit, at
 - firendly URL (e.g. blog.vojtasvoboda.cz/prvni-clanek)
 - stránkování článků na homepage
 - implementace Google Analytics
+- implementace Open Graph meta tagů kvůli Facebook sdílení
 
 ### 1.2. Uživatelské role
 
