@@ -8,22 +8,22 @@
     "packages": [
         {
             "name": "dg/adminer-custom",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/adminer-custom.git",
-                "reference": "75ec829dd3a17e0074bec94e56b3c0a75ce1711a"
+                "reference": "8a621342c57bc8194c4489ebb983757b8da52571"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/75ec829dd3a17e0074bec94e56b3c0a75ce1711a",
-                "reference": "75ec829dd3a17e0074bec94e56b3c0a75ce1711a",
+                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/8a621342c57bc8194c4489ebb983757b8da52571",
+                "reference": "8a621342c57bc8194c4489ebb983757b8da52571",
                 "shasum": ""
             },
             "type": "project",
             "notification-url": "https://packagist.org/downloads/",
             "description": "Customization for the best database management tool written in PHP, Adminer",
-            "time": "2014-04-18 22:01:23"
+            "time": "2014-06-11 07:56:43"
         },
         {
             "name": "latte/latte",
@@ -1104,19 +1104,20 @@
     "packages-dev": [
         {
             "name": "nette/tester",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tester.git",
-                "reference": "53767d1776d683c33b9cfe742b864311e89c318e"
+                "reference": "1023fbf942a34d8971ec835bb86a849a33e2ad56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tester/zipball/53767d1776d683c33b9cfe742b864311e89c318e",
-                "reference": "53767d1776d683c33b9cfe742b864311e89c318e",
+                "url": "https://api.github.com/repos/nette/tester/zipball/1023fbf942a34d8971ec835bb86a849a33e2ad56",
+                "reference": "1023fbf942a34d8971ec835bb86a849a33e2ad56",
                 "shasum": ""
             },
             "require": {
+                "ext-iconv": "*",
                 "php": ">=5.3.0"
             },
             "bin": [
@@ -1125,7 +1126,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -1149,14 +1150,14 @@
                     "homepage": "http://nette.org/contributors"
                 }
             ],
-            "description": "An easy-to-use PHP Unit Testing framework.",
+            "description": "An easy-to-use PHP unit testing framework.",
             "homepage": "http://nette.org",
             "keywords": [
                 "nette",
                 "testing",
                 "unit"
             ],
-            "time": "2014-04-02 13:27:38"
+            "time": "2014-06-11 15:50:33"
         }
     ],
     "aliases": [

@@ -5,7 +5,7 @@
 {foreach $articles as $article}
 
 <div class="article">
-    <h2>{$article->name}</h2>
+    <h2><a href="{link Homepage:detail $article->url}">{$article->name}</a></h2>
     <p>{!$article->text}</p>
 </div>
 

@@ -1,0 +1,9 @@
+{block content}
+
+<h1>{$article->name}</h1>
+
+<p><a href="{link Homepage:}">&lt; zpět na všechny články</a></p>
+
+Datum: {$article->date|date:'d.m.Y'}
+
+{!$article->text}

@@ -50,7 +50,8 @@ Databázovou tabulku uložím do složky 'sql' jako skript 'simpleblog.sql'. Viz
 
 Dále je potřeba vytvořit model aplikace, kde budou dostupné data z databáze. Návrh modelu sepíši do souboru _analyse/02_app_draft.md jako sekci Návrh modelu.
 
-Nejdříve si vytvoříme třídu Repository, která nám bude zastřešovat práci s jednou databázovou tabulkou. Tato třída bude absolutně nezávislá na obsahu databázových tabulek.
+Protože nechceme v každém repozitáři pro každou tabulku řešit základní operace, vytvoříme si třídu Repository, která nám bude zastřešovat práci s jednou databázovou tabulkou.
+Tato třída bude absolutně nezávislá na obsahu databázových tabulek.
 Bude nám implementovat metody jako findAll() pro získání všech záznamů, findOne($id) pro získání jednoho záznamu dle primárního klíče, vytváření a mazání záznamů.
 Protože se bude do budoucna jednat o znovupoužitelnou třídu, umístíme si jí ven z aktuální aplikace do vlastní vendor složky, kterou si vytvoříme v /vendor/simple/.
 Musíme rovněž nastavit autoloading souborů, aby nám viděl i do naší nové složky /simple/, což provedeme v souboru bootstrap.php přidáním řádku:
@@ -78,3 +79,62 @@ Nyní si vypíšeme vložené články. Do databáze vložím dva testovací čl
 
 Přes kontruktor si zavedeme do třídy repozitář článků, který se nám díky autowiringu v Nette zavede automaticky. Na repozitáři vytáhneme všechny články pomocí findAll() a rovnou předáme do šablony.
 V šabloně si články vypíšeme pomocí foreach() cyklu a to je vše. Základní blog funguje :-) Viz commit ['Basic blog application'](https://github.com/vojtasvoboda/SimpleBlog/commit/4a5ab9ed33178daff61b42dd7d5ae66ac72cfb82).
+
+Nyní můžeme přidávat další doplňkovou funkcionalitu, která nám bude danou aplikaci rozvíjet.
+
+### Detail článku
+
+Dále potřebujeme detail článku. K tomu si upravíme i routování aplikace, v souboru /app/router/RouterFactory.php, protože
+chceme mít hezké URL typu /nazev-clanku/. K tomu použijeme Apache modul mod_rewrite v kombinaci s konfigurací přepisu v souboru htaccess.
+Nicméně pokud nám pro začátek nevadí používat URL ve tvaru:
+
+www.simpleblog.cz/?slug=prvni-clanek&amp;action=detail
+
+můžeme toto vše přeskočit.
+
+Do RouterFactory.php tedy přidáme dvě routy - jednu pro všechny články a druhou pro detail článku:
+
+$router[] = new Route('', 'Homepage:default');
+$router[] = new Route('<slug>/', 'Homepage:detail');
+
+Navíc přidáme podmínku, pokud by nebyl přítomen mod_rewrite, tak aby se použil základní SimpleRouter, který předává parametry přes GET, viz příklad URL výše.
+
+Napíšeme si v HomepagePresenteru metodu pro detail článku, který se pouze pokusí najít daný článek podle URL a pokud nenajde, tak zobrazí šablonu notfound.latte.
+Také si do repozitáře ArticlesRepository dopíšu metodu pro získání všech článků podle URL. Toto bych sice mohl napsat přímo do presenteru, ale protože chceme mít pěkné interní API
+aplikace které půjde volat odkudkoli (třeba i přes Ajaxový požadavek), tak dáváme veškerou logiku do modelové části.
+Navíc hledáme pouze publikované články, takže výsledná metoda pro nalezení článku vypadá takto:
+
+public function findOne($url)
+{
+    return $this->findOneBy(
+        array(
+            'url' => $url,
+            'published' => true,
+            'published_date <= ?' => new SqlLiteral('NOW()')
+        ));
+}
+
+V šabloně si všimněte použití vykřičníku pro výpis čistého HTML a dále použití helperu pro výpis datumu článku ve vlastním formátu.
+Doplníme ještě odkaz pro návrat z detailu článku na homepage a máme hotovo.
+
+Pozn.: V aktuálním stavu bychom mohli repozitář klidně dědit přímo z Repozitory a klidně BaseRepository přeskočit. Potřebujeme totiž pouze získání připojení do databáze a toť vše.
+
+### Aktualizace Nette
+
+Během vývoje tohoto blogu vyšla nová verze Nette 2.2.1, takže si můžeme rovnou aktualizovat. Naštěstí používáme Composer, takže vše lze vyřešit jedním příkazem:
+
+composer update
+
+Až budeme mít aplikaci hotovou, je dobré v souboru composer.json zafixovat verze jednotlivých komponent.
+Znamená to, že přímo definujeme verzi s kterou máme aplikaci odzkoušenou a funguje. To je důležité, protože pokud bychom provedli update na novější verzi,
+která by nebyla kompatibilní, mohla by se nám aplikace rozbít.
+
+### Otagování verze
+
+Protože naše aplikace umí vypsat všechny články a zobrazit jeho detail, označíme si aplikaci jako verzi 0.1 a přidáme do gitu příslušný tag.
+Sice nevypadá pěkně a skoro nic neumí, svůj účel ale již splňuje.
+
+Aktuální stav aplikace viz commit ['Article detail'](https://github.com/vojtasvoboda/SimpleBlog/commit/4a5ab9ed33178daff61b42dd7d5ae66ac72cfb82).
+
+TODO:
+- projít jak se zavádějí služby/factories do konfigu

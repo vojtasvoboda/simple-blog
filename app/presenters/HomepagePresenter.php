@@ -23,4 +23,13 @@ class HomepagePresenter extends BasePresenter
         $this->template->articles = $this->articlesRepository->findAll();
     }
 
+    public function renderDetail($slug)
+    {
+        $article = $this->articlesRepository->findOne($slug);
+        if (!$article) {
+            $this->setView('notfound');
+        }
+        $this->template->article = $article;
+    }
+
 }

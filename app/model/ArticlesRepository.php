@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Nette\Database\SqlLiteral;
 use Simple\Repository\BaseRepository;
 
 /**
@@ -11,5 +12,22 @@ use Simple\Repository\BaseRepository;
  */
 class ArticlesRepository extends BaseRepository
 {
+
+    /**
+     * Najde jeden článek dle URL
+     *
+     * @param $url
+     *
+     * @return FALSE|\Nette\Database\Table\ActiveRow
+     */
+    public function findOne($url)
+    {
+        return $this->findOneBy(
+            array(
+                'url' => $url,
+                'published' => true,
+                'published_date <= ?' => new SqlLiteral('NOW()')
+            ));
+    }
 
 }
