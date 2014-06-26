@@ -21,7 +21,7 @@
     <h3>Tagy</h3>
     <p class="tags">
         {foreach $tags as $tag}
-        <span class="tag">{$tag->name}</span><span class="separator">{if !$iterator->last}, {/if}</span>
+        <span class="tag"><a href="{link Tags:detail $tag->url}">{$tag->name}</a></span><span class="separator">{if !$iterator->last}, {/if}</span>
         {/foreach}
     </p>
     {/if}

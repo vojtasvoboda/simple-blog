@@ -1,0 +1,22 @@
+{block title}{$tag->name|truncate:50}{/block}
+{block description}{$tag->name}{/block}
+{block contentclass}tag-detail{/block}
+{block content}
+
+<section id="section">
+
+    <h1>Štítek {$tag->name}</h1>
+
+    <p><a href="{link Tags:}">&lt; zpět na všechny tagy</a></p>
+
+    {foreach $tag->related('articles') as $article}
+        <h2><a href="{link Homepage:detail $article->article->url}">{$article->article->name}</a></h2>
+        <p class="date"><span class="label">Datum: </span><span class="value">{$article->article->date|date:'d.m.Y'}</span></p>
+        <p>{!$article->article->text|perex}</p>
+    {/foreach}
+
+</section>
+
+<aside id="aside">
+
+</aside>

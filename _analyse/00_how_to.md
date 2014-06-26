@@ -12,7 +12,7 @@ cd SimpleBlog
 git init  
 ``
 
-Vytvořím si základní soubor README.md a soubor .gitignore, protože některé složky, nebo soubory nebudeme chtít verzovat (např složku nbproject, kterou vytváří NetBeans). Vytvoříme první commit. V rámci celého článku budu uvádět název commitu na GitHubu.
+Vytvořím si základní soubor README.md a soubor .gitignore, protože některé složky, nebo soubory nebudeme chtít verzovat (např složku .idea, kterou vytváří PhpStorm). Vytvoříme první commit. V rámci celého článku budu uvádět název commitu na GitHubu.
 
 ``
 touch README.md  
@@ -25,13 +25,13 @@ Ze stránek http://nette.org/cs/download zkopírujeme odkaz pro instalaci zákla
 
 ``composer create-project nette/sandbox``
 
-Projekt se nám rozbalí do složky sandbox, tak si ho vykopírujeme o úroveň výše a sloučíme si soubory .gitignore. Tím máme připravenou základní aplikaci, která je dostupná na adrese http://localhost/SimpleBlog/www/ viz commit ‘Nette sandbox app‘. Na MacOs nastavíme práva pro zápis do složek (i podsložek) log a temp.
+Projekt se nám rozbalí do složky sandbox, tak si ho vykopírujeme o úroveň výše a sloučíme si soubory .gitignore. Tím máme připravenou základní aplikaci, která je dostupná na adrese http://localhost/SimpleBlog/www/ viz commit [Nette sandbox app](https://github.com/vojtasvoboda/SimpleBlog/commit/5b08a4f6289f8e0d28e066ac7ab666220ff13ec8). Na MacOs nastavíme práva pro zápis do složek (i podsložek) log a temp.
 
-Protože chci co nejjednodušší aplikaci a nechci prozatím řešit nastavení [virtuálního serveru](http://blog.vojtasvoboda.cz/nastaveni-serveru-apache-na-macos) přesunu si veřejné soubory do rootu projektu. Styly a Javascript soubory si dám pro přehlednost do složky assets. Projekt je nyní dostupný hezky na adrese http://localhost/SimpleBlog/. Viz commit ['Copy public files to root'](https://github.com/vojtasvoboda/SimpleBlog/commit/ca1347b3618673624f7f33df0e947f4e1f4f1db7).
+Protože chci co nejjednodušší aplikaci a nechci prozatím řešit nastavení [virtuálního serveru](http://blog.vojtasvoboda.cz/nastaveni-serveru-apache-na-macos) přesunu si veřejné soubory do rootu projektu. CSS styly a Javascript soubory si dám pro přehlednost do složky /assets. Projekt je nyní dostupný hezky na adrese http://localhost/SimpleBlog/. Viz commit ['Copy public files to root'](https://github.com/vojtasvoboda/SimpleBlog/commit/ca1347b3618673624f7f33df0e947f4e1f4f1db7).
 
 ## Požadavky na aplikaci
 
-Dále si sepíši požadavky na naší aplikaci a dáme rovnou také do repozitáře, viz commit ['Aplication requirements'](https://github.com/vojtasvoboda/SimpleBlog/commit/15e88433c42454704e3629efa8a31aa5a810e59f).
+Dále si sepíši požadavky na naší aplikaci do souboru /_analyse/01_requirements.md, viz commit ['Aplication requirements'](https://github.com/vojtasvoboda/SimpleBlog/commit/15e88433c42454704e3629efa8a31aa5a810e59f).
 
 Z požadavků si sestavím případy užití, abych věděl jakou funkcionalitu musím pokrýt a jaké objekty (článek, uživatel, tag) musím vytvořit, viz commit ['Aplication use-cases'](https://github.com/vojtasvoboda/SimpleBlog/commit/8e4376a02032679dee9728f1bbe4e099a79fae4c).
 
@@ -42,13 +42,13 @@ Vytvoříme si databázi s názvem 'simpleblog' a nastavíme jí do projektu pom
 
 Z požadavků a případů užití si vypíši základní entity které chci spravovat (článek, uživatel, tag) a vytvořím databázové tabulky s příslušnýmy atributy.
 Vzhledem k tomu, že článek může mít více tagů a jeden tag může odkazovat na více článků, vytvořím také relační tabulku pro vazbu mezi články a tagy. Protože používám InnoDB nastavím také relace mezi klíči a všechny parametry nastavím na CASCADE, protože když se smaže tag, nebo článek, musí se odstranit i příslušná vazba.
-Viz soubor _analyse/02_app_draft.md.
+Viz soubor '_analyse/02_app_draft.md'.
 
 Databázovou tabulku uložím do složky 'sql' jako skript 'simpleblog.sql'. Viz commit ['Entities and database'](https://github.com/vojtasvoboda/SimpleBlog/commit/d4a6e1ca4fe652c2d2477ef916c4802f19b21a5a).
 
 ### Model aplikace
 
-Dále je potřeba vytvořit model aplikace, kde budou dostupné data z databáze. Návrh modelu sepíši do souboru _analyse/02_app_draft.md jako sekci Návrh modelu.
+Dále je potřeba vytvořit model aplikace, kde budou dostupné data z databáze. Návrh modelu sepíši do souboru '_analyse/02_app_draft.md' jako sekci Návrh modelu.
 
 Protože nechceme v každém repozitáři pro každou tabulku řešit základní operace, vytvoříme si třídu Repository, která nám bude zastřešovat práci s jednou databázovou tabulkou.
 Tato třída bude absolutně nezávislá na obsahu databázových tabulek.
@@ -65,13 +65,13 @@ $configurator->createRobotLoader()
 Tato třída rovněž dokáže rozpoznat název tabulky podle názvu třídy a automaticky nastavit databázové spojení (viz funkce Repository->getTable() a příslušný komentář).
 
 Dále si stejným způsobem vytvoříme třídu BaseRepository, která nám bude zastřešovat základní operace s jedním repozitářem, ale již bude vyžadovat nějaké určité sloupce v databázi,
-např. sloupec active (značí jestli je položka aktivní), name (název položky), created (datum vytvoření), updated (datum poslední změny).
+např. sloupec active (značí jestli je položka aktivní), name (název položky), created (datum vytvoření), updated (datum poslední změny). Tyto funkce využijeme ale až v administrační části.
 
 Implementováno je automatické vytvoření URL pokud existuje sloupec s názvem 'url' a dále se bude vkládat datum vytvoření, nebo úpravy dané položky.
 Tato funkcionalita není pro běh blogu potřeba (funkce pro vytváření URL bychom mohli dát pouze do repozitáře s článkama a sloupce created/updated bychom mohli úplně vyloučit), ale ušetří nám práci pro budoucí rozšiřování.
 
 Posledním krokem bude už finální vytvoření požadovaných repozitářů pro jednotlivé databázové tabulky, tzn ArticlesRepository, TagsRepository a UsersRepository.
-Repozitáře jsou prázdné, protože veškerou potřebnou funkcionalitu pokryjí základní Repository a BaseRepository. Repozitáře zavedeme do aplikace v souboru config.neon v sekci Services.
+Repozitáře jsou prázdné, protože veškerou potřebnou funkcionalitu pokryjí základní Repository a BaseRepository od kterých dědíme. Repozitáře zavedeme do aplikace v souboru config.neon v sekci Services.
 
 ### Zkouška základní aplikace
 
@@ -140,6 +140,7 @@ Aktuální stav aplikace viz commit ['Article detail'](https://github.com/vojtas
 
 Základ blogu máme vytvořený, ale umí prakticky pouze zobrazit všechny články a konkrétní detail článku.
 Funkcí které je potřeba doplnit a implementovat je hodně, ale já chci blog spustit co nejdříve a proto je potřeba přidělit úkolům priority.
+Vytvořím proto soubor '_analyse/03_roadmap.md' kde seřadím funkčnost dle priority a podle nich začnu s rozšiřováním blogu.
 
 ### Výpis pouze úryvku článku ve výpisu všech článků
 
@@ -161,7 +162,7 @@ V šabloně pro výpis všech článků už jenom aplikujeme vytvořený helper:
 <p>{!$article->text|perex}</p>
 
 Také jsem provedl pár dalších drobností: vypsání meta tagu description v detailu článku, dle názvu článku; vypsání pouze publikovaných článků atd.
-Viz commit ['Article perexes']()
+Viz commit ['Article perexes'](https://github.com/vojtasvoboda/SimpleBlog/commit/905cbe13c9f8642746037f5e8c6127fe93edecfa)
 
 ### Výpis tagů v detailu článku
 
@@ -178,7 +179,25 @@ Za posledním tagem čárku již nevypisujeme. Není třeba nijak modifikovat mo
 
 To samé si uděláme u výpisu všech článků, ale zde vypíšeme úplně všechny tagy uložené v systému. Abychom to měli zobrazeno v levém sloupci vedle článků,
 trošku upravíme layout celého webu a přidáme levý sloupec. Dále je potřeba získat všechny tagy v systému a to provedeme v HomepagePresenteru v akci renderDefault().
-Model není potřeba upravit, protože voláme obecnou metodu findAll(). Viz commit ['Articles tags']()
+Model není potřeba upravit, protože voláme obecnou metodu findAll(). Viz commit ['Articles tags'](https://github.com/vojtasvoboda/SimpleBlog/commit/0c20b288584c2f4ffd9ef82e46ef5a372d8158d5)
+
+### Proklik tagů a zobrazení souvisejících článků
+
+Abychom mohli zobrazit všechny články daného tagu, uděláme si je proklikávací. Zde jsem si uvědomil, že jsem pro tagy zapomněl v databázi vytvořit sloupec 'url', jako unikátní identifikátor, protože chceme mít pro tagy URL ve formátu:
+
+www.simpleblog.cz/tags/konference/
+
+Protože chceme zobrazovat tagy na samostatné URL /tags/ musíme si již vytvořit nový presenter TagsPresenter a příslušnou šablonu templates/Tags/default.latte a detail.latte. Další postup bude už podobný jako u HomepagePresenteru a jeho šablon.
+Vytvoříme metodu defaultAction(), která bude načítat seznam všech tagů a vypisovat je do šablony. Následovně vytvoříme detailAction(), která bude vypisovat detail jednoho článku a související články.
+Rovněž je potřeba upravit routování pro cestu /tags/, aby nám směřovalo na presenter TagsPresenter.
+
+$router[] = new Route('tags/', 'Tags:default');
+$router[] = new Route('tags/<slug>', 'Tags:detail');
+
+Vzhledem k tomu, že pro jednotlivé tagy vypisujeme související články a potřebujeme také helper perex, musíme si registraci tohoto helperu přesunout z HomepagePresenteru do BasePresenteru, aby byl dostupný všude.
 
 TODO:
 - projít jak se zavádějí služby/factories do konfigu
+- semver
+- do textu napsat, že jsem něco opravil a odkázat se na commit opravy
+

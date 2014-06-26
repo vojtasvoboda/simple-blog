@@ -1,0 +1,19 @@
+{block content}
+
+<section id="section">
+
+    <h1>Tagy</h1>
+
+    {foreach $tags as $tag}
+
+    <div class="tag">
+        <h2><a href="{link Tags:detail $tag->url}">{$tag->name}</a></h2>
+    </div>
+
+    {/foreach}
+
+</section>
+
+<aside id="aside">
+
+</aside>

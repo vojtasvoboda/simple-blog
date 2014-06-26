@@ -66,8 +66,9 @@ html.js .jshidden {
     top: 0;
     width: 250px;
     margin-left: 20px;
+    padding-top: 57px;
 }
-
-.article-detail #aside .date {
-    margin-top: 55px;
+#aside h3 {
+    padding-top: 0;
+    margin-top: 0;
 }

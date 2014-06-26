@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `articles_tags` (
 CREATE TABLE IF NOT EXISTS `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_czech_ci NOT NULL,
   `articles_count` int(11) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
