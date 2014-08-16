@@ -11,3 +11,4 @@ vendor/*
 app/config/config.local.neon
 atlassian-ide-plugin.xml
 .idea
+!vendor/simple
