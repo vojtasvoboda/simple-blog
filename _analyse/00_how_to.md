@@ -224,6 +224,13 @@ Protože se nám šablony začínají opakovat, provedu lehčí refaktoring tím
 
 Vše viz commit ['Fulltext search'](https://github.com/vojtasvoboda/simple-blog/commit/7c5c275efb2fbd7504e7e79db870fa50b95925b5)
 
+### RSS výstup
+
+Pro RSS výstup vytvoříme akorát novou akci Rss pro existující presenter Homepage. Zde získáme všechny články a pošleme je to šablony rss.latte, která bude má speciální zápis pro vypsání XML formátu. Také musíme zjistit datum poslední úpravy, což odpovídá datumu úpravy posledního článku.
+Musíme rovněž přidat ONE_WAY routu pro starou adresu RSS feedu, který již nebude dostupný.
+
+Viz commit ['RSS feed export']
+
 Next TODO:
 - RSS kanál
 - projít repozitář

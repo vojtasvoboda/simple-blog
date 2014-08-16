@@ -43,9 +43,29 @@ class HomepagePresenter extends BasePresenter
         $this->template->article = $article;
     }
 
+    /**
+     * RSS action render
+     */
+    public function renderRss()
+    {
+        $lastUpdated = "";
+        // get all articles
+        $articles = $this->articlesRepository->findAllPublished();
+        // get date of last udpated article
+        if (!empty($articles)) {
+            foreach($articles as $a) {
+                $lastUpdated = $a->published_date;
+                break;
+            }
+        }
+        // data to template
+        $this->template->articles = $articles;
+        $this->template->lastUpdated = $lastUpdated;
+    }
+
     public function actionSearch($q = '')
     {
-        // get query
+        // get query, fix array query
         if (is_array($q)) {
             if(!empty($q)) {
                 $q = $q[0];
@@ -67,6 +87,7 @@ class HomepagePresenter extends BasePresenter
 
     protected function createComponentSearchForm()
     {
+        // create form from factory
         $form = new \App\Forms\SearchForm();
         $form->setValues(array('q' => $this->searchQuery));
         $form->onSuccess[] = $this->searchFormSubmitted;
@@ -74,6 +95,11 @@ class HomepagePresenter extends BasePresenter
         return $form;
     }
 
+    /**
+     * Search form submitted method
+     *
+     * @param \App\Forms\SearchForm $form
+     */
     public function searchFormSubmitted(\App\Forms\SearchForm $form) {
         $values = $form->getValues(TRUE);
         $this->redirect("Homepage:search", array('q' => $values['q']));
