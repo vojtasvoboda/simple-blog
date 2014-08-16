@@ -1,6 +1,6 @@
-# SimpleBlog
+# simple-blog
 
-Celý projekt včetně jedlotlivých commitů je dostupný na GitHubu: [https://github.com/vojtasvoboda/SimpleBlog](https://github.com/vojtasvoboda/SimpleBlog)
+Celý projekt včetně jedlotlivých commitů je dostupný na GitHubu: [https://github.com/vojtasvoboda/simple-blog](https://github.com/vojtasvoboda/simple-blog)
 
 ## Základní aplikace
 
@@ -25,15 +25,15 @@ Ze stránek http://nette.org/cs/download zkopírujeme odkaz pro instalaci zákla
 
 ```composer create-project nette/sandbox```
 
-Projekt se nám rozbalí do složky sandbox, tak si ho vykopírujeme o úroveň výše a sloučíme si soubory .gitignore. Tím máme připravenou základní aplikaci, která je dostupná na adrese http://localhost/SimpleBlog/www/ viz commit [Nette sandbox app](https://github.com/vojtasvoboda/SimpleBlog/commit/5b08a4f6289f8e0d28e066ac7ab666220ff13ec8). Na MacOs nastavíme práva pro zápis do složek (i podsložek) log a temp.
+Projekt se nám rozbalí do složky sandbox, tak si ho vykopírujeme o úroveň výše a sloučíme si soubory .gitignore. Tím máme připravenou základní aplikaci, která je dostupná na adrese http://localhost/simple-blog/www/ viz commit [Nette sandbox app](https://github.com/vojtasvoboda/simple-blog/commit/5b08a4f6289f8e0d28e066ac7ab666220ff13ec8). Na MacOs nastavíme práva pro zápis do složek (i podsložek) log a temp.
 
-Protože chci co nejjednodušší aplikaci a nechci prozatím řešit nastavení [virtuálního serveru](http://blog.vojtasvoboda.cz/nastaveni-serveru-apache-na-macos) přesunu si veřejné soubory do rootu projektu. CSS styly a Javascript soubory si dám pro přehlednost do složky /assets. Projekt je nyní dostupný hezky na adrese http://localhost/SimpleBlog/. Viz commit ['Copy public files to root'](https://github.com/vojtasvoboda/SimpleBlog/commit/ca1347b3618673624f7f33df0e947f4e1f4f1db7).
+Protože chci co nejjednodušší aplikaci a nechci prozatím řešit nastavení [virtuálního serveru](http://blog.vojtasvoboda.cz/nastaveni-serveru-apache-na-macos) přesunu si veřejné soubory do rootu projektu. CSS styly a Javascript soubory si dám pro přehlednost do složky /assets. Projekt je nyní dostupný hezky na adrese http://localhost/SimpleBlog/. Viz commit ['Copy public files to root'](https://github.com/vojtasvoboda/simple-blog/commit/ca1347b3618673624f7f33df0e947f4e1f4f1db7).
 
 ## Požadavky na aplikaci
 
-Dále si sepíši požadavky na naší aplikaci do souboru /_analyse/01_requirements.md, viz commit ['Aplication requirements'](https://github.com/vojtasvoboda/SimpleBlog/commit/15e88433c42454704e3629efa8a31aa5a810e59f).
+Dále si sepíši požadavky na naší aplikaci do souboru /_analyse/01_requirements.md, viz commit ['Aplication requirements'](https://github.com/vojtasvoboda/simple-blog/commit/15e88433c42454704e3629efa8a31aa5a810e59f).
 
-Z požadavků si sestavím případy užití, abych věděl jakou funkcionalitu musím pokrýt a jaké objekty (článek, uživatel, tag) musím vytvořit, viz commit ['Aplication use-cases'](https://github.com/vojtasvoboda/SimpleBlog/commit/8e4376a02032679dee9728f1bbe4e099a79fae4c).
+Z požadavků si sestavím případy užití, abych věděl jakou funkcionalitu musím pokrýt a jaké objekty (článek, uživatel, tag) musím vytvořit, viz commit ['Aplication use-cases'](https://github.com/vojtasvoboda/simple-blog/commit/8e4376a02032679dee9728f1bbe4e099a79fae4c).
 
 ## Návrh aplikace
 
@@ -45,7 +45,7 @@ Z požadavků a případů užití si vypíši základní entity které chci spr
 Vzhledem k tomu, že článek může mít více tagů a jeden tag může odkazovat na více článků, vytvořím také relační tabulku pro vazbu mezi články a tagy. Protože používám InnoDB nastavím také relace mezi klíči a všechny parametry nastavím na CASCADE, protože když se smaže tag, nebo článek, musí se odstranit i příslušná vazba.
 Viz soubor '_analyse/02_app_draft.md'.
 
-Databázovou tabulku uložím do složky 'sql' jako skript 'simpleblog.sql'. Viz commit ['Entities and database'](https://github.com/vojtasvoboda/SimpleBlog/commit/d4a6e1ca4fe652c2d2477ef916c4802f19b21a5a).
+Databázovou tabulku uložím do složky 'sql' jako skript 'simpleblog.sql'. Viz commit ['Entities and database'](https://github.com/vojtasvoboda/simple-blog/commit/d4a6e1ca4fe652c2d2477ef916c4802f19b21a5a).
 
 ### Model aplikace
 
@@ -81,7 +81,7 @@ Repozitáře jsou prázdné, protože veškerou potřebnou funkcionalitu pokryj�
 Nyní si vypíšeme vložené články. Do databáze vložím dva testovací články a upravím přiložený SQL skript. Model již máme připravený a zaregistrovaný, stačí tedy upravit HomepagePresenter a získat všechny uložené články.
 
 Přes kontruktor si zavedeme do třídy repozitář článků, který se nám díky autowiringu v Nette zavede automaticky. Z repozitáře záskáme všechny články pomocí findAll() a rovnou předáme do šablony.
-V šabloně si články vypíšeme pomocí foreach() cyklu a to je vše. Základní blog funguje :-) Viz commit ['Basic blog application'](https://github.com/vojtasvoboda/SimpleBlog/commit/4a5ab9ed33178daff61b42dd7d5ae66ac72cfb82).
+V šabloně si články vypíšeme pomocí foreach() cyklu a to je vše. Základní blog funguje :-) Viz commit ['Basic blog application'](https://github.com/vojtasvoboda/simple-blog/commit/4a5ab9ed33178daff61b42dd7d5ae66ac72cfb82).
 
 Nyní můžeme přidávat další doplňkovou funkcionalitu, která nám bude danou aplikaci rozvíjet.
 
@@ -134,10 +134,10 @@ která by nebyla kompatibilní, mohla by se nám aplikace rozbít.
 
 ### Otagování verze
 
-Protože naše aplikace umí vypsat všechny články a zobrazit jeho detail, označíme si aplikaci jako verzi 0.1 a přidáme do gitu ['příslušný tag'](https://github.com/vojtasvoboda/SimpleBlog/tree/v0.1).
+Protože naše aplikace umí vypsat všechny články a zobrazit jeho detail, označíme si aplikaci jako verzi 0.1 a přidáme do gitu ['příslušný tag'](https://github.com/vojtasvoboda/simple-blog/tree/v0.1).
 Sice nevypadá pěkně a skoro nic neumí, svůj účel ale již splňuje.
 
-Aktuální stav aplikace viz commit ['Article detail'](https://github.com/vojtasvoboda/SimpleBlog/commit/de86074625bf0d59a113c937aef1f457938de246).
+Aktuální stav aplikace viz commit ['Article detail'](https://github.com/vojtasvoboda/simple-blog/commit/de86074625bf0d59a113c937aef1f457938de246).
 
 ## Rozšiřování blogu o další funkce
 
@@ -168,10 +168,10 @@ V šabloně pro výpis všech článků už jenom aplikujeme vytvořený helper:
 <p>{!$article->text|perex}</p>
 ```
 
-Třída posthaven-more je pozůstatek z bývalého blogu. Tento element je pak potřeba v detailu článku odstranit. Viz commit ['Remove perex divider'](https://github.com/vojtasvoboda/SimpleBlog/commit/5897d85d36a8ae8de454116bfecf0cd9985b8dac)
+Třída posthaven-more je pozůstatek z bývalého blogu. Tento element je pak potřeba v detailu článku odstranit. Viz commit ['Remove perex divider'](https://github.com/vojtasvoboda/simple-blog/commit/5897d85d36a8ae8de454116bfecf0cd9985b8dac)
 
 Také jsem provedl pár dalších drobností: vypsání meta tagu description v detailu článku, dle názvu článku; vypsání pouze publikovaných článků atd.
-Viz commit ['Article perexes'](https://github.com/vojtasvoboda/SimpleBlog/commit/905cbe13c9f8642746037f5e8c6127fe93edecfa)
+Viz commit ['Article perexes'](https://github.com/vojtasvoboda/simple-blog/commit/905cbe13c9f8642746037f5e8c6127fe93edecfa)
 
 ### Výpis tagů v detailu článku
 
@@ -190,7 +190,7 @@ Za posledním tagem čárku již nevypisujeme. Není třeba nijak modifikovat mo
 
 To samé si uděláme u výpisu všech článků, ale zde vypíšeme úplně všechny tagy uložené v systému. Abychom to měli zobrazeno v levém sloupci vedle článků,
 trošku upravíme layout celého webu a přidáme levý sloupec. Dále je potřeba získat všechny tagy v systému a to provedeme v HomepagePresenteru v akci renderDefault().
-Model není potřeba upravit, protože voláme obecnou metodu findAll(). Viz commit ['Articles tags'](https://github.com/vojtasvoboda/SimpleBlog/commit/0c20b288584c2f4ffd9ef82e46ef5a372d8158d5)
+Model není potřeba upravit, protože voláme obecnou metodu findAll(). Viz commit ['Articles tags'](https://github.com/vojtasvoboda/simple-blog/commit/0c20b288584c2f4ffd9ef82e46ef5a372d8158d5)
 
 ### Proklik tagů a zobrazení souvisejících článků
 
@@ -218,13 +218,13 @@ Přidáme si do levého sloupce formulář pro fulltextové vyhledávání. V re
 což automaticky hledá metodu createComponentSearchForm() která vrací objekt typu Form a podle toho se formulář automaticky vykreslí. Musíme také upravit routování pro novou cestu /search/.
 Protože se nám šablony začínají opakovat, provedu lehčí refaktoring tím, že opakující se části vyčlením do samostatných šablonek, které pak načítám pomocí:
 
+```
 {include 'include/aside.latte'}
+```
 
-Vše viz commit ['Fulltext search']()
-
+Vše viz commit ['Fulltext search'](https://github.com/vojtasvoboda/simple-blog/commit/7c5c275efb2fbd7504e7e79db870fa50b95925b5)
 
 Next TODO:
-- fulltext vyhledávání do levého sloupce
 - RSS kanál
 - projít repozitář
 - komentáře pod článkem asi zatím přes Disqus
