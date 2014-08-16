@@ -6,7 +6,7 @@ use Nette,
     App\Model;
 
 /**
- * Homepage presenter.
+ * Tag presenter.
  */
 class TagsPresenter extends BasePresenter
 {

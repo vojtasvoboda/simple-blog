@@ -26,6 +26,7 @@ class RouterFactory
             $router[] = new Route('', 'Homepage:default');
             $router[] = new Route('tags/', 'Tags:default');
             $router[] = new Route('tags/<slug>', 'Tags:detail');
+            $router[] = new Route('search/', 'Homepage:search');
             $router[] = new Route('<slug>', 'Homepage:detail');
             $router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 

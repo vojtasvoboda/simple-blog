@@ -1,0 +1,9 @@
+{foreach $articles as $article}
+
+<div class="article">
+    <h2><a href="{link Homepage:detail $article->url}">{$article->name}</a></h2>
+    <p class="date"><span class="label">Datum: </span><span class="value">{$article->date|date:'d.m.Y'}</span></p>
+    <p>{!$article->text|perex}</p>
+</div>
+
+{/foreach}

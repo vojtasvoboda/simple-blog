@@ -1,0 +1,17 @@
+{block content}
+
+<section id="section">
+
+    <h1>Výsledky vyhledávání{if $query} "{$query}" - nalezeno {$searchResultsCount} výsledků{/if}</h1>
+
+    <p><a href="{link Homepage:}">&lt; zpět na seznam článků</a></p>
+
+    {if $searchResultsCount == 0}
+        <p>Nebyl nalezen žádný článek, prosím zkuste jiný vyhledávací dotaz, nebo si projděte <a href="{link Homepage:}">seznam článků</a>.
+    {else}
+        {include 'include/articles.latte'}
+    {/if}
+
+</section>
+
+{include 'include/aside.latte'}

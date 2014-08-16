@@ -15,6 +15,12 @@ class HomepagePresenter extends BasePresenter
 
     private $tagsRepository;
 
+    private $searchResults = null;
+
+    private $searchQuery = '';
+
+    private $searchResultsCount = 0;
+
     public function __construct(\App\Model\ArticlesRepository $articlesRepository,
                                 \App\Model\TagsRepository $tagsRepository)
     {
@@ -35,6 +41,42 @@ class HomepagePresenter extends BasePresenter
             $this->setView('notfound');
         }
         $this->template->article = $article;
+    }
+
+    public function actionSearch($q = '')
+    {
+        // get query
+        if (is_array($q)) {
+            if(!empty($q)) {
+                $q = $q[0];
+            }
+        }
+        // find articles by query
+        $this->searchResults = $this->articlesRepository->findFulltext($q);
+        $this->searchResultsCount = sizeof($this->searchResults);
+        $this->searchQuery = $q;
+    }
+
+    public function renderSearch($q = '')
+    {
+        $this->template->query = $this->searchQuery;
+        $this->template->articles = $this->searchResults;
+        $this->template->searchResultsCount = $this->searchResultsCount;
+        $this->template->tags = $this->tagsRepository->findAll();
+    }
+
+    protected function createComponentSearchForm()
+    {
+        $form = new \App\Forms\SearchForm();
+        $form->setValues(array('q' => $this->searchQuery));
+        $form->onSuccess[] = $this->searchFormSubmitted;
+
+        return $form;
+    }
+
+    public function searchFormSubmitted(\App\Forms\SearchForm $form) {
+        $values = $form->getValues(TRUE);
+        $this->redirect("Homepage:search", array('q' => $values['q']));
     }
 
 }

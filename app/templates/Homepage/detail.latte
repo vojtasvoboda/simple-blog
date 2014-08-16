@@ -17,13 +17,8 @@
 
     <p class="date"><span class="label">Datum: </span><span class="value">{$article->date|date:'d.m.Y'}</span></p>
 
-    {if sizeof($article->related(articles_tags)) > 0 }
-    <h2>Tagy</h2>
-    <p class="tags">
-        {foreach $article->related(articles_tags) as $tag}
-        <span class="tag">{$tag->tags->name}</span><span class="separator">{if !$iterator->last}, {/if}</span>
-        {/foreach}
-    </p>
-    {/if}
+    {control searchForm}
+
+    {include 'include/tags.latte'}
 
 </aside>

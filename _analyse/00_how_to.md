@@ -211,6 +211,18 @@ Vzhledem k tomu, že pro jednotlivé tagy vypisujeme související články a po
 
 ### Fulltext vyhledávání
 
+Přidáme si do levého sloupce formulář pro fulltextové vyhledávání. V repozitáři článků si vytvoříme metodu findFullText(), která nám bude vracet seznam článků dle vyhledávacího dotazu. Dále si vytvoříme formulář jako továrničku do složky forms. Toto vše propojíme v HomepagePresenteru a formulář předáme do šablony pomocí:
+
+{control searchForm}
+
+což automaticky hledá metodu createComponentSearchForm() která vrací objekt typu Form a podle toho se formulář automaticky vykreslí. Musíme také upravit routování pro novou cestu /search/.
+Protože se nám šablony začínají opakovat, provedu lehčí refaktoring tím, že opakující se části vyčlením do samostatných šablonek, které pak načítám pomocí:
+
+{include 'include/aside.latte'}
+
+Vše viz commit ['Fulltext search']()
+
+
 Next TODO:
 - fulltext vyhledávání do levého sloupce
 - RSS kanál

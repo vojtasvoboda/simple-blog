@@ -43,4 +43,26 @@ class ArticlesRepository extends BaseRepository
             ));
     }
 
+    /**
+     * Find articles by query
+     *
+     * @param $query
+     * @param $key
+     *
+     * @return \Nette\Database\Table\Selection
+     */
+    public function findFulltext($query, $key = 'text')
+    {
+        if ( empty($query) ) {
+            return null;
+        }
+        return $this
+            ->findAll()
+            ->where(
+                "(`name` LIKE ?) OR (LOWER(`" . $key . "`) LIKE ?)",
+                "%" . strtolower($query) . "%",
+                "%" . strtolower($query) . "%"
+            );
+    }
+
 }
