@@ -6,24 +6,24 @@ Celý projekt včetně jedlotlivých commitů je dostupný na GitHubu: [https://
 
 Vytvoříme si nový adresář který je dostupný pro běh na lokálním serveru a inicializujeme Git, kterým budeme projekt verzovat.
 
-``
+```
 mkdir SimpleBlog  
 cd SimpleBlog  
 git init  
-``
+```
 
 Vytvořím si základní soubor README.md a soubor .gitignore, protože některé složky, nebo soubory nebudeme chtít verzovat (např složku .idea, kterou vytváří PhpStorm). Vytvoříme první commit. V rámci celého článku budu uvádět název commitu na GitHubu.
 
-``
+```
 touch README.md  
 touch .gitignore  
 git add .  
 git commit -m “First commit”  
-``
+```
 
 Ze stránek http://nette.org/cs/download zkopírujeme odkaz pro instalaci základní Nette aplikace.
 
-``composer create-project nette/sandbox``
+```composer create-project nette/sandbox```
 
 Projekt se nám rozbalí do složky sandbox, tak si ho vykopírujeme o úroveň výše a sloučíme si soubory .gitignore. Tím máme připravenou základní aplikaci, která je dostupná na adrese http://localhost/SimpleBlog/www/ viz commit [Nette sandbox app](https://github.com/vojtasvoboda/SimpleBlog/commit/5b08a4f6289f8e0d28e066ac7ab666220ff13ec8). Na MacOs nastavíme práva pro zápis do složek (i podsložek) log a temp.
 
@@ -38,9 +38,10 @@ Z požadavků si sestavím případy užití, abych věděl jakou funkcionalitu 
 ## Návrh aplikace
 
 ### Databáze
+
 Vytvoříme si databázi s názvem 'simpleblog' a nastavíme jí do projektu pomocí souboru /app/config.neon.
 
-Z požadavků a případů užití si vypíši základní entity které chci spravovat (článek, uživatel, tag) a vytvořím databázové tabulky s příslušnýmy atributy.
+Z požadavků a případů užití si vypíši základní entity které chci spravovat a vytvořím databázové tabulky s příslušnýmy atributy.
 Vzhledem k tomu, že článek může mít více tagů a jeden tag může odkazovat na více článků, vytvořím také relační tabulku pro vazbu mezi články a tagy. Protože používám InnoDB nastavím také relace mezi klíči a všechny parametry nastavím na CASCADE, protože když se smaže tag, nebo článek, musí se odstranit i příslušná vazba.
 Viz soubor '_analyse/02_app_draft.md'.
 
@@ -56,11 +57,13 @@ Bude nám implementovat metody jako findAll() pro získání všech záznamů, f
 Protože se bude do budoucna jednat o znovupoužitelnou třídu, umístíme si jí ven z aktuální aplikace do vlastní vendor složky, kterou si vytvoříme v /vendor/simple/.
 Musíme rovněž nastavit autoloading souborů, aby nám viděl i do naší nové složky /simple/, což provedeme v souboru bootstrap.php přidáním řádku:
 
+```
 $configurator->createRobotLoader()
 	->addDirectory(__DIR__)
 	->addDirectory(__DIR__ . '/../vendor/others')
     ->addDirectory(__DIR__ . '/../vendor/simple')
 	->register();
+```
 
 Tato třída rovněž dokáže rozpoznat název tabulky podle názvu třídy a automaticky nastavit databázové spojení (viz funkce Repository->getTable() a příslušný komentář).
 
@@ -77,7 +80,7 @@ Repozitáře jsou prázdné, protože veškerou potřebnou funkcionalitu pokryj�
 
 Nyní si vypíšeme vložené články. Do databáze vložím dva testovací články a upravím přiložený SQL skript. Model již máme připravený a zaregistrovaný, stačí tedy upravit HomepagePresenter a získat všechny uložené články.
 
-Přes kontruktor si zavedeme do třídy repozitář článků, který se nám díky autowiringu v Nette zavede automaticky. Na repozitáři vytáhneme všechny články pomocí findAll() a rovnou předáme do šablony.
+Přes kontruktor si zavedeme do třídy repozitář článků, který se nám díky autowiringu v Nette zavede automaticky. Z repozitáře záskáme všechny články pomocí findAll() a rovnou předáme do šablony.
 V šabloně si články vypíšeme pomocí foreach() cyklu a to je vše. Základní blog funguje :-) Viz commit ['Basic blog application'](https://github.com/vojtasvoboda/SimpleBlog/commit/4a5ab9ed33178daff61b42dd7d5ae66ac72cfb82).
 
 Nyní můžeme přidávat další doplňkovou funkcionalitu, která nám bude danou aplikaci rozvíjet.
@@ -86,11 +89,7 @@ Nyní můžeme přidávat další doplňkovou funkcionalitu, která nám bude da
 
 Dále potřebujeme detail článku. K tomu si upravíme i routování aplikace, v souboru /app/router/RouterFactory.php, protože
 chceme mít hezké URL typu /nazev-clanku/. K tomu použijeme Apache modul mod_rewrite v kombinaci s konfigurací přepisu v souboru htaccess.
-Nicméně pokud nám pro začátek nevadí používat URL ve tvaru:
-
-www.simpleblog.cz/?slug=prvni-clanek&amp;action=detail
-
-můžeme toto vše přeskočit.
+Nicméně pokud nám pro začátek nevadí používat URL ve tvaru www.simpleblog.cz/?slug=prvni-clanek&amp;action=detail můžeme toto vše přeskočit.
 
 Do RouterFactory.php tedy přidáme dvě routy - jednu pro všechny články a druhou pro detail článku:
 
@@ -104,6 +103,7 @@ Také si do repozitáře ArticlesRepository dopíšu metodu pro získání všec
 aplikace které půjde volat odkudkoli (třeba i přes Ajaxový požadavek), tak dáváme veškerou logiku do modelové části.
 Navíc hledáme pouze publikované články, takže výsledná metoda pro nalezení článku vypadá takto:
 
+```
 public function findOne($url)
 {
     return $this->findOneBy(
@@ -113,6 +113,7 @@ public function findOne($url)
             'published_date <= ?' => new SqlLiteral('NOW()')
         ));
 }
+```
 
 V šabloně si všimněte použití vykřičníku pro výpis čistého HTML a dále použití helperu pro výpis datumu článku ve vlastním formátu.
 Doplníme ještě odkaz pro návrat z detailu článku na homepage a máme hotovo.
@@ -123,7 +124,9 @@ Pozn.: V aktuálním stavu bychom mohli repozitář klidně dědit přímo z Rep
 
 Během vývoje tohoto blogu vyšla nová verze Nette 2.2.1, takže si můžeme rovnou aktualizovat. Naštěstí používáme Composer, takže vše lze vyřešit jedním příkazem:
 
+```
 composer update
+```
 
 Až budeme mít aplikaci hotovou, je dobré v souboru composer.json zafixovat verze jednotlivých komponent.
 Znamená to, že přímo definujeme verzi s kterou máme aplikaci odzkoušenou a funguje. To je důležité, protože pokud bychom provedli update na novější verzi,
@@ -146,6 +149,7 @@ Vytvořím proto soubor '_analyse/03_roadmap.md' kde seřadím funkčnost dle pr
 
 Pro zkrácení textu ve výpisu všech článků vytvoříme helper, který pak zavoláme v šabloně. Helper implementujeme jako anonymní funkci a zaregistrujeme v presenteru do Latte:
 
+```
 protected function createTemplate($class = NULL)
 {
     $template = parent::createTemplate($class);
@@ -156,24 +160,29 @@ protected function createTemplate($class = NULL)
     });
     return $template;
 }
+```
 
 V šabloně pro výpis všech článků už jenom aplikujeme vytvořený helper:
 
+```
 <p>{!$article->text|perex}</p>
+```
 
 Také jsem provedl pár dalších drobností: vypsání meta tagu description v detailu článku, dle názvu článku; vypsání pouze publikovaných článků atd.
 Viz commit ['Article perexes'](https://github.com/vojtasvoboda/SimpleBlog/commit/905cbe13c9f8642746037f5e8c6127fe93edecfa)
 
 ### Výpis tagů v detailu článku
 
-Do databáze si vložíme nějaké tagy a vypíšeme je v detailu článku:
+Do databáze si vložíme nějaké tagy, propojíme s články a vypíšeme je v detailu článku:
 
+```
 <p class="tags">
     <span class="label">Tagy: </span>
     {foreach $article->related(articles_tags) as $tag}
     <span class="tag">{$tag->tags->name}</span><span class="separator">{if !$iterator->last}, {/if}</span>
     {/foreach}
 </p>
+```
 
 Za posledním tagem čárku již nevypisujeme. Není třeba nijak modifikovat model, ani presenter článků.
 
@@ -191,8 +200,10 @@ Protože chceme zobrazovat tagy na samostatné URL /tags/ musíme si již vytvo�
 Vytvoříme metodu defaultAction(), která bude načítat seznam všech tagů a vypisovat je do šablony. Následovně vytvoříme detailAction(), která bude vypisovat detail jednoho článku a související články.
 Rovněž je potřeba upravit routování pro cestu /tags/, aby nám směřovalo na presenter TagsPresenter.
 
+```
 $router[] = new Route('tags/', 'Tags:default');
 $router[] = new Route('tags/<slug>', 'Tags:detail');
+```
 
 Vzhledem k tomu, že pro jednotlivé tagy vypisujeme související články a potřebujeme také helper perex, musíme si registraci tohoto helperu přesunout z HomepagePresenteru do BasePresenteru, aby byl dostupný všude.
 
@@ -200,4 +211,4 @@ TODO:
 - projít jak se zavádějí služby/factories do konfigu
 - semver
 - do textu napsat, že jsem něco opravil a odkázat se na commit opravy
-
+- projít repozitář http://www.zeminem.cz/develop

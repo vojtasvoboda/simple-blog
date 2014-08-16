@@ -17,8 +17,6 @@ Chci se tak vyvarovat použití VirtualHosts, Nette modulů, migrací, entit, at
 - sociální tlačítka pro sdílení
 - komentáře pod článkem
 - verzování článků
-- vzhledově přibližně jako blog http://matschaffer.com/ nebo dle základního vzhledu Postheaven (http://blog.posthaven.com/)
-- font viz Clearly doplněk do Chrome (font-family: chaparral-pro, serif;)
 - blog bude mít levý sloupec, kde bude vyhledávání, tagy a popis autora - posune to čtený text doprostřed monitoru
 
 ### 1.1. Technické požadavky
@@ -49,3 +47,12 @@ Chci se tak vyvarovat použití VirtualHosts, Nette modulů, migrací, entit, at
 - zobrazení starší verze článku a porovnání s aktuální
 - sdílení článku sociálním tlačítkem
 - přihlášení do administrace
+
+### 1.4. Inspirace pro grafiku
+
+- http://123slov.cz/o-deadlinech/
+- http://matschaffer.com/
+- basic template http://blog.posthaven.com/
+- http://blog.janmarek.net/
+- font viz Clearly doplněk do Chrome (font-family: chaparral-pro, serif;)
+- http://vvv.tobiassjosten.net/symfony/doctrine-migrations-gotchas-in-symfony/
