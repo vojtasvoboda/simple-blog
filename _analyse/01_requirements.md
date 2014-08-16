@@ -2,7 +2,7 @@
 
 Cílem je napsat aplikaci pro zveřejňování článků co nejjednodušší cestou, bez zbytečné míry komplexity. 
 Aplikace by měl být i zároveň step-by-step návod pro naučení se tvorby základní aplikace v Nette. 
-Chci se tak vyvarovat použití VirtualHosts, Nette modulů, migrací, entit, atd.
+Chci se tak vyvarovat použití VirtualHosts, Nette modulů, migrací, Doctrine entit, atd.
 
 ## 1. Základní požadavky
 
@@ -21,12 +21,12 @@ Chci se tak vyvarovat použití VirtualHosts, Nette modulů, migrací, entit, at
 
 ### 1.1. Technické požadavky
 
-- aplikace musí bežet na klasickém prostředí Apache + PHP 5.3/5.4 + MySQL bez žádný speciálních doplňků (mcrypt, memcache).
+- aplikace musí bežet na klasickém prostředí Apache + PHP 5.4 + MySQL bez žádný speciálních doplňků (mcrypt, memcache).
 - RSS kanál
 - HTML5
 - kód obohacený o sémantické informace (mikroformáty, mikrodata, RDF)
 - mazání článku provede akorát nastavení příznaků smazáno
-- firendly URL (e.g. blog.vojtasvoboda.cz/prvni-clanek)
+- friendly URL (e.g. blog.vojtasvoboda.cz/prvni-clanek)
 - stránkování článků na homepage
 - implementace Google Analytics
 - implementace Open Graph meta tagů kvůli Facebook sdílení

@@ -168,6 +168,8 @@ V šabloně pro výpis všech článků už jenom aplikujeme vytvořený helper:
 <p>{!$article->text|perex}</p>
 ```
 
+Třída posthaven-more je pozůstatek z bývalého blogu. Tento element je pak potřeba v detailu článku odstranit. Viz commit ['Remove perex divider'](https://github.com/vojtasvoboda/SimpleBlog/commit/5897d85d36a8ae8de454116bfecf0cd9985b8dac)
+
 Také jsem provedl pár dalších drobností: vypsání meta tagu description v detailu článku, dle názvu článku; vypsání pouze publikovaných článků atd.
 Viz commit ['Article perexes'](https://github.com/vojtasvoboda/SimpleBlog/commit/905cbe13c9f8642746037f5e8c6127fe93edecfa)
 
@@ -207,8 +209,24 @@ $router[] = new Route('tags/<slug>', 'Tags:detail');
 
 Vzhledem k tomu, že pro jednotlivé tagy vypisujeme související články a potřebujeme také helper perex, musíme si registraci tohoto helperu přesunout z HomepagePresenteru do BasePresenteru, aby byl dostupný všude.
 
-TODO:
+### Fulltext vyhledávání
+
+Next TODO:
+- fulltext vyhledávání do levého sloupce
+- RSS kanál
+- projít repozitář
+- komentáře pod článkem asi zatím přes Disqus
+- udělat migraci dat ze starého blogu
+- code highlighting
+- do levého sloupce popis autora s odkazem na /about-me
+- like button do detailu článku
+- Google Analytics, Open Graph, GWT
+- do levého sloupce info o open-source + separátní stránku jako http://www.zeminem.cz/develop
+- sepsat instalaci do README.md
+
+Someday TODO:
+- admin s vkládáním obrázků
 - projít jak se zavádějí služby/factories do konfigu
 - semver
-- do textu napsat, že jsem něco opravil a odkázat se na commit opravy
-- projít repozitář http://www.zeminem.cz/develop
+- sémantické informace
+- travis.yml (http://www.zeminem.cz/develop)
