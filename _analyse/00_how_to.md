@@ -232,16 +232,17 @@ Musíme rovněž přidat ONE_WAY routu pro starou adresu RSS feedu, který již 
 Viz commit ['RSS feed export']
 
 Next TODO:
-- RSS kanál
-- projít repozitář
-- komentáře pod článkem asi zatím přes Disqus
 - udělat migraci dat ze starého blogu
 - code highlighting
+- komentáře pod článkem asi zatím přes Disqus
+- pořešit vzhled
 - do levého sloupce popis autora s odkazem na /about-me
-- like button do detailu článku
-- Google Analytics, Open Graph, GWT
 - do levého sloupce info o open-source + separátní stránku jako http://www.zeminem.cz/develop
 - sepsat instalaci do README.md
+
+After lunch:
+- ověřit RSS
+- GA, GWT, OpenGraph, Like button pod článek
 
 Someday TODO:
 - admin s vkládáním obrázků
