@@ -20,6 +20,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             $startBreakpoint = strpos($s, '<hr class="' . $class);
             return mb_substr($s, 0, $startBreakpoint);
         });
+        // remove perex divider
+        $template->getLatte()->addFilter('removeMoreClass', function($s, $class = 'posthaven-more') {
+            return str_replace('<hr class="' . $class . '">', '', $s);
+        });
         return $template;
     }
 
